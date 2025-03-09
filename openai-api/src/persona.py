@@ -2,12 +2,11 @@ from src.openai_client import OpenAIClient
 from src.memory_db import MemoryDB
 
 class Persona:
-    # def __init__(self, name, personality, memory=None):
-    def __init__(self, name, personality, memory_db: MemoryDB):
+    def __init__(self, name, personality, openai_client: OpenAIClient, memory_db: MemoryDB):
         self.name = name
         self.personality = personality
         self.memory_db = memory_db
-        self.client = OpenAIClient().get_client()
+        self.client = openai_client.get_client()
 
     def remember(self, conversation_id, role, content):
         """会話履歴を記録する"""

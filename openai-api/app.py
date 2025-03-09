@@ -1,40 +1,19 @@
-import os
-from openai import OpenAI
-from openai import AsyncOpenAI
-from openai_client import OpenAIClient
-
-
-def chat_with_gpt(client: OpenAI, prompt: str) -> str:
-    messages: list[dict[str, str]] = [
-        {
-            "role": "user",
-            "content": prompt
-        },
-    ]
-
-    chat_completion = client.chat.completions.create(
-        messages=messages,
-        model="gpt-4o",
-        # temperatureは0.0から1.0の間で設定できる
-        # temperatureは0.0にすると、最も確信度の高い回答を返す
-        # temperature=0.0,
-        temperature=1.0,
-    )
-
-    return chat_completion.choices[0].message.content
+from persona import Persona
 
 def main() -> None:
-    # Create an OpenAI client
-    openai_client = OpenAIClient()
-    client = openai_client.get_client()
+    user1 = Persona("Alice", "あなたは関東出身の日本人男性です。")
+    user2 = Persona("Bob", "あなたは関西弁の日本人男性です。")
 
     # Testing on console
-    user_input = input("入力: ")
+    user_input = input("あなた: ")
+    response = user1.chat(user_input)
+    print(user1.name, ":\n", response)
+    print("\n")
 
-    response = chat_with_gpt(client, user_input)
-    # response = chat_with_gpt(async_client, user_input)
-
-    print("\nAIの応答:\n", response)
+    user_input = input("あなた: ")
+    response = user2.chat(user_input)
+    print(user2.name, ":\n", response)
+    print("\n")
 
 if __name__ == "__main__":
     main()

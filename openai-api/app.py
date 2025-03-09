@@ -1,6 +1,5 @@
 import os
 from dotenv import load_dotenv
-# import openai
 from openai import OpenAI
 from openai import AsyncOpenAI
 
@@ -44,6 +43,8 @@ def main() -> None:
     user_input = input("入力: ")
 
     response = chat_with_gpt(client, user_input)
+    # response = chat_with_gpt(async_client, user_input)
+
     
     print("\nAIの応答:\n", response)
 

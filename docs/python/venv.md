@@ -24,6 +24,7 @@ echo $VIRTUAL_ENV
 ```
 
 ## シェルの設定
+必要に応じて、シェルの設定ファイル（~/.bashrc または ~/.zshrc ）に以下の設定を追加する
 ```bash
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"

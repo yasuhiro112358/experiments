@@ -1,7 +1,8 @@
 import os
-from dotenv import load_dotenv
 from openai import OpenAI
 from openai import AsyncOpenAI
+from openai_client import OpenAIClient
+
 
 def chat_with_gpt(client: OpenAI, prompt: str) -> str:
     messages: list[dict[str, str]] = [
@@ -23,21 +24,9 @@ def chat_with_gpt(client: OpenAI, prompt: str) -> str:
     return chat_completion.choices[0].message.content
 
 def main() -> None:
-    # Load environment variables from a .env file
-    load_dotenv()
-
-    # Access environment variables
-    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-
-    if not OPENAI_API_KEY:
-        print("ERROR: OpenAI APIキーが設定されていません")
-        exit(1)
-
     # Create an OpenAI client
-    client = OpenAI(api_key=OPENAI_API_KEY)
-
-    # Create an AsyncOpenAI client
-    async_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+    openai_client = OpenAIClient()
+    client = openai_client.get_client()
 
     # Testing on console
     user_input = input("入力: ")
@@ -45,7 +34,6 @@ def main() -> None:
     response = chat_with_gpt(client, user_input)
     # response = chat_with_gpt(async_client, user_input)
 
-    
     print("\nAIの応答:\n", response)
 
 if __name__ == "__main__":

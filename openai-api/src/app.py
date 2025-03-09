@@ -1,6 +1,6 @@
-from persona import Persona
+from src.persona import Persona
 
-def main() -> None:
+def run_chat() -> None:
     user1 = Persona("Alice", "あなたは関東出身の日本人男性です。")
     user2 = Persona("Bob", "あなたは関西弁の日本人男性です。")
 
@@ -14,6 +14,3 @@ def main() -> None:
     response = user2.chat(user_input)
     print(user2.name, ":\n", response)
     print("\n")
-
-if __name__ == "__main__":
-    main()

@@ -1,4 +1,4 @@
-from openai_client import OpenAIClient
+from src.openai_client import OpenAIClient
 
 class Persona:
     def __init__(self, name, personality, memory=None):

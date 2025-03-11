@@ -1,6 +1,7 @@
 from src.openai_client import OpenAIClient
 from src.memory_db import MemoryDB
 from src.persona import Persona
+from src.conversation_manager import ConversationManager
 
 def run_chat() -> None:
     openai_client = OpenAIClient()
@@ -10,14 +11,24 @@ def run_chat() -> None:
     user2 = Persona("Bob", "あなたは関西弁の日本人男性です。", openai_client, memory_db)
 
     # Testing on console
-    conversation_id = "test_conversation_1"
-    user_input = input("あなた: ")
-    response = user1.chat(conversation_id, user_input)
-    print(user1.name, ":\n", response)
-    print("\n")
 
-    conversation_id = "test_conversation_2"
-    user_input = input("あなた: ")
-    response = user2.chat(conversation_id, user_input)
-    print(user2.name, ":\n", response)
-    print("\n")
+    # conversation_id = "test_conversation_1"
+    # user_input = input("あなた: ")
+    # response = user1.chat(conversation_id, user_input)
+    # print(user1.name, ":\n", response)
+    # print("\n")
+
+    # conversation_id = "test_conversation_2"
+    # user_input = input("あなた: ")
+    # response = user2.chat(conversation_id, user_input)
+    # print(user2.name, ":\n", response)
+    # print("\n")
+
+    conversation_id: str = "test_conversation_3"
+
+    conversation_manager = ConversationManager(conversation_id)
+    conversation_manager.add_persona(user1)
+    conversation_manager.add_persona(user2)
+
+    conversation_manager.talk("Alice", "Bob", "こんにちは")
+

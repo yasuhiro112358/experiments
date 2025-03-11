@@ -2,7 +2,7 @@ from src.openai_client import OpenAIClient
 from src.memory_db import MemoryDB
 
 class Persona:
-    def __init__(self, name, personality, openai_client: OpenAIClient, memory_db: MemoryDB):
+    def __init__(self, name: str, personality: str, openai_client: OpenAIClient, memory_db: MemoryDB):
         self.name = name
         self.personality = personality
         self.memory_db = memory_db
@@ -12,7 +12,7 @@ class Persona:
         """会話履歴を記録する"""
         self.memory_db.insert(conversation_id, role, content)
 
-    def chat(self, conversation_id, user_input) -> str:
+    def chat(self, conversation_id: str, user_input: str) -> str:
         """ChatGPTを使って会話を行う"""
         messages = [{"role": "system", "content": self.personality}]
         messages += self.memory_db.get_messages(conversation_id)

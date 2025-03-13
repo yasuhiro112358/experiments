@@ -1,0 +1,7 @@
+services:
+  openai_app:
+    build: .
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    stdin_open: true
+    tty: true

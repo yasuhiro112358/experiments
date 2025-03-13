@@ -24,7 +24,7 @@ def run_chat() -> None:
 
     conversation_id: str = "test_conversation_1"
 
-    chat0: str = "他にもおすすめある？"
+    chat0: str = "音楽について話しましょう！"
     print(f"{alice.name}: {chat0}")
     chat1: str = bob.speak(conversation_id, alice.id, chat0)
     print(f"{bob.name}: {chat1}")

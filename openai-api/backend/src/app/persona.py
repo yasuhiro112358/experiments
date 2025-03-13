@@ -1,6 +1,6 @@
 from typing import List, Dict
-from src.openai_client import OpenAIClient
-from src.memory_db import MemoryDB
+from openai_client import OpenAIClient
+from memory_db import MemoryDB
 import uuid
 
 class Persona:

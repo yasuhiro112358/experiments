@@ -1,7 +1,8 @@
 services:
   backend:
     build:
-      context: ./backend
+      context: .
+      dockerfile: ./backend/Dockerfile
     env_file:
       - ./config/.env.dev
     depends_on:
@@ -9,13 +10,15 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./backend/src:/app/src
+      - ./backend/src:/backend/src
+      - ./backend/data:/backend/data
     ports:
       - "5001:5000"
 
   database:
     build:
-      context: ./database
+      context: .
+      dockerfile: ./database/Dockerfile
     ports:
       - "27017:27017"
     volumes:

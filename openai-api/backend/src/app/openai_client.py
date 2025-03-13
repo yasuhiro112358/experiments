@@ -5,7 +5,7 @@ from openai import AsyncOpenAI
 
 class OpenAIClient:
     def __init__(self):
-        load_dotenv()
+        load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../../../config/.env.dev'))
         self.api_key = os.environ.get("OPENAI_API_KEY")
 
         if not self.api_key:

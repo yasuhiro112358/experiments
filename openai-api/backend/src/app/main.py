@@ -1,5 +1,4 @@
-def main():
-    print("Hello, World!")
+from app import run_chat
 
 if __name__ == "__main__":
-    main()
+    run_chat()

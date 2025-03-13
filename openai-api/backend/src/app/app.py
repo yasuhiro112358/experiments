@@ -1,7 +1,7 @@
-from src.openai_client import OpenAIClient
-from src.memory_db import MemoryDB
-from src.persona import Persona
-from src.conversation_manager import ConversationManager
+from openai_client import OpenAIClient
+from memory_db import MemoryDB
+from persona import Persona
+from conversation_manager import ConversationManager
 
 def run_chat() -> None:
     openai_client = OpenAIClient()

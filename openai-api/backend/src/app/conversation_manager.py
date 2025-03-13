@@ -1,4 +1,4 @@
-from src.persona import Persona
+from persona import Persona
 
 class ConversationManager:
     def __init__(self, conversation_id: str) -> None:

@@ -3,7 +3,9 @@ import os
 from typing import List, Dict
 
 class MemoryDB:
-    def __init__(self, db_path="data/memory.db") -> None:
+    def __init__(self, db_path=None) -> None:
+        if db_path is None:
+            db_path = os.path.join(os.path.dirname(__file__), "../../data/memory.db")
         self.db_path = db_path
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.conn = sqlite3.connect(db_path)

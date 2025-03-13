@@ -1,7 +1,25 @@
 services:
-  openai_app:
-    build: .
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - ./config/.env.dev
+    depends_on:
+      - database
     stdin_open: true
     tty: true
+    volumes:
+      - ./backend/src:/app/src
+    ports:
+      - "5001:5000"
+
+  database:
+    build:
+      context: ./database
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

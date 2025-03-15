@@ -18,4 +18,4 @@ COPY ./backend/data/ ./backend/data/
 COPY ./config/.env.dev ./config/.env.dev
 
 # Set the entry point for the container
-CMD ["python", "backend/src/app/main.py"]
+CMD ["python", "backend/src/app/app.py"]

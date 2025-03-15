@@ -8,7 +8,7 @@ class MemoryDB:
             db_path = os.path.join(os.path.dirname(__file__), "../../data/memory.db")
         self.db_path = db_path
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
-        self.conn = sqlite3.connect(db_path)
+        self.conn = sqlite3.connect(db_path, check_same_thread=False)
         self.create_table()
 
     def create_table(self) -> None:

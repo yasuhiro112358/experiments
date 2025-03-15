@@ -12,7 +12,6 @@
 python3 -m venv venv
 
 # 仮想環境の有効化
-source venv/bin/activate
 source backend/venv/bin/activate
 
 # 仮想環境の無効化

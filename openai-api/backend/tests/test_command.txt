@@ -2,14 +2,14 @@ curl http://localhost:5001/health
 
 curl -X POST http://localhost:5001/chat -H "Content-Type: application/json" -d '{
     "conversation_id": "test_conversation_1",
-    "speaker_id": "bbbdd292-accf-4ebb-b38d-8dc991d32065",
-    "listener_id": "9d7c6cb2-331d-42c5-a3df-93c899f8bdfd",
+    "speaker_id": "67d5bdccc9b5719b96222c8b",
+    "listener_id": "67d5bdccc9b5719b96222c8e",
     "message": "音楽について話しましょう！"
 }'
 
 curl -X POST http://localhost:5001/chat -H "Content-Type: application/json" -d '{
     "conversation_id": "test_conversation_1",
-    "speaker_id": "bbbdd292-accf-4ebb-b38d-8dc991d32065",
-    "listener_id": "9d7c6cb2-331d-42c5-a3df-93c899f8bdfd",
+    "speaker_id": "67d5bdccc9b5719b96222c8b",
+    "listener_id": "67d5bdccc9b5719b96222c8e",
     "message": "Let'\''s talk about music!"
 }'

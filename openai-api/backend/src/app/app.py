@@ -1,5 +1,8 @@
 from flask import Flask
+from config import Config
 from controllers.chat_controller import chat_bp
+
+Config.init()
 
 app = Flask(__name__)
 app.config['DEBUG'] = True

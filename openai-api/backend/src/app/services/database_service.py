@@ -1,9 +1,6 @@
+import os
 from pymongo import MongoClient
 from pymongo.database import Database
-import os
-from dotenv import load_dotenv
-
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../../../../config/.env.dev'))
 
 class DatabaseService:
     @staticmethod

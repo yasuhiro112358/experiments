@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, Response
 import json
 from models.persona import Persona
+from bson import ObjectId
 
 chat_bp = Blueprint('chat', __name__)
 
@@ -44,14 +45,15 @@ def run_chat() -> Response:
         bob = Persona("Bob", "あなたは関西弁の日本人男性です。議論が大好きです。")
         bob.save()
 
-    conversation_id: str = "test_conversation_1"
+    conversation_id = ObjectId()
+    # conversation_id = ObjectId("xxxx")
 
     chat0: str = "音楽について話しましょう！"
     chat1: str = bob.speak(conversation_id, alice.id, chat0)
     chat2: str = alice.speak(conversation_id, bob.id, chat1)
 
     result = {
-        "conversation_id": conversation_id,
+        "conversationId": str(conversation_id),
         "messages": [
             {"speaker": alice.name, "message": chat0},
             {"speaker": bob.name, "message": chat1},

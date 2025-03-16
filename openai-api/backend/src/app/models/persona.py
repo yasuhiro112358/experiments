@@ -1,11 +1,11 @@
 from typing import Optional, Dict, List
-from pymongo import MongoClient
 from bson.objectid import ObjectId
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 from services.openai_client import OpenAIClient
+from services.database_service import DatabaseService
 
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../../../../config/.env.dev'))
+# load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../../../../config/.env.dev'))
 
 class Persona:
     def __init__(self, name: str, personality: str, persona_id: Optional[ObjectId] = None) -> None:
@@ -13,11 +13,10 @@ class Persona:
         self.name = name
         self.personality = personality
         self.openai_client = OpenAIClient().get_client()
-        self.mongo_client = MongoClient(os.getenv("MONGO_URI"))
+        self.db = DatabaseService.get_app_database()
 
     def save(self) -> None:
-        db = self.mongo_client.appDatabase
-        db.personas.insert_one({
+        self.db.personas.insert_one({
             "_id": self.id,
             "name": self.name,
             "personality": self.personality
@@ -25,8 +24,7 @@ class Persona:
 
     @classmethod
     def load(cls, persona_id: ObjectId) -> Optional["Persona"]:
-        mongo_client = MongoClient(os.getenv("MONGO_URI"))
-        db = mongo_client.appDatabase
+        db = DatabaseService.get_app_database()
         data = db.personas.find_one({"_id": persona_id})
         if data:
             return cls(data["name"], data["personality"], persona_id)
@@ -34,8 +32,7 @@ class Persona:
             return None
 
     def generate_message(self, conversation_id: ObjectId, listener_id: ObjectId, received_message: str) -> str:
-        db = self.mongo_client.appDatabase
-        prev_messages = list(db.messages.find({"conversationId": conversation_id}))
+        prev_messages = list(self.db.messages.find({"conversationId": conversation_id}))
 
         messages: List[Dict[str, str]] = []
         # システムメッセージを追加
@@ -60,8 +57,7 @@ class Persona:
         return replying_message
 
     def remember_message(self, conversation_id: ObjectId, listener_id: ObjectId, message: str) -> None:
-        db = self.mongo_client.appDatabase
-        db.messages.insert_one({
+        self.db.messages.insert_one({
             "conversationId": conversation_id,
             "speakerId": self.id,
             "listenerId": listener_id,

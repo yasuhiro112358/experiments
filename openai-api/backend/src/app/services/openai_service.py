@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 from openai import AsyncOpenAI
 
-class OpenAIClient:
+class OpenAIService:
     def __init__(self) -> None:
         self.api_key = os.environ.get("OPENAI_API_KEY")
         if not self.api_key:

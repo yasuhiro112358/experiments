@@ -1,18 +1,14 @@
 from typing import Optional, Dict, List
 from bson.objectid import ObjectId
-# import os
-# from dotenv import load_dotenv
-from services.openai_client import OpenAIClient
+from services.openai_service import OpenAIService
 from services.database_service import DatabaseService
-
-# load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../../../../config/.env.dev'))
 
 class Persona:
     def __init__(self, name: str, personality: str, persona_id: Optional[ObjectId] = None) -> None:
         self.id = persona_id if persona_id else ObjectId()
         self.name = name
         self.personality = personality
-        self.openai_client = OpenAIClient().get_client()
+        self.openai_client = OpenAIService().get_client()
         self.db = DatabaseService.get_app_database()
 
     def save(self) -> None:

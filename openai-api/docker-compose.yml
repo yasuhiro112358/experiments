@@ -1,7 +1,43 @@
 services:
-  openai_app:
-    build: .
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    env_file:
+      - ./config/.env.dev
     stdin_open: true
     tty: true
+    volumes:
+      - ./frontend/build:/frontend/build
+      - ./frontend/public:/frontend/public
+      - ./frontend/src:/frontend/src
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    env_file:
+      - ./config/.env.dev
+    depends_on:
+      - database
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./backend/src:/backend/src
+      - ./backend/data:/backend/data
+    ports:
+      - "5001:5000"
+
+  database:
+    build:
+      context: .
+      dockerfile: ./database/Dockerfile
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

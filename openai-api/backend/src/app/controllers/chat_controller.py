@@ -31,14 +31,14 @@ def chat() -> Response:
 
 @chat_bp.route('/run-chat', methods=['GET'])
 def run_chat() -> Response:
-    alice = Persona.load("67d5bdccc9b5719b96222c8b")
+    alice = Persona.load(ObjectId("67d65ea99e94f9bd48e6f668"))
     if alice:
         print(f"Loaded Persona: {alice.name}, {alice.personality}")
     else:
         alice = Persona("Alice", "あなたは関東出身の日本人女性です。")
         alice.save()
 
-    bob = Persona.load("67d5bdccc9b5719b96222c8e")
+    bob = Persona.load(ObjectId("67d65ea99e94f9bd48e6f66b"))
     if bob:
         print(f"Loaded Persona: {bob.name}, {bob.personality}")
     else:

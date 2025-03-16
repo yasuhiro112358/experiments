@@ -1,6 +1,7 @@
 from flask import Flask
 from config import Config
 from controllers.chat_controller import chat_bp
+from controllers.persona_controller import persona_bp
 
 def create_app() -> Flask:
     Config.init()
@@ -10,6 +11,7 @@ def create_app() -> Flask:
     app.config['JSON_AS_ASCII'] = False
 
     app.register_blueprint(chat_bp)
+    app.register_blueprint(persona_bp)
 
     return app
 

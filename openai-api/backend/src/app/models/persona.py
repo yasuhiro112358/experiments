@@ -13,11 +13,14 @@ class Persona:
         self.db = DatabaseService.get_app_database()
 
     def save(self) -> None:
-        self.db.personas.insert_one({
-            "_id": self.id,
-            "name": self.name,
-            "personality": self.personality
-        })
+        self.db.personas.update_one(
+            {"_id": self.id},
+            {"$set": {
+                "name": self.name,
+                "personality": self.personality
+            }},
+            upsert=True
+        )
 
     @classmethod
     def load(cls, persona_id: ObjectId) -> Optional["Persona"]:
@@ -27,9 +30,18 @@ class Persona:
             return cls(data["name"], data["personality"], persona_id)
         else:
             return None
+        
+    @classmethod
+    def load_all(cls) -> List["Persona"]:
+        db = DatabaseService.get_app_database()
+        personas_data = db.personas.find()
+        
+        return [cls(data["name"], data["personality"], data["_id"]) for data in personas_data]
+        
+    def delete(self) -> None:
+        self.db.personas.delete_one({"_id": self.id})
 
     def generate_message(self, conversation_id: ObjectId, listener_id: ObjectId, received_message: str) -> str:
-        # prev_messages = list(self.db.messages.find({"conversationId": conversation_id}))
         prev_messages = Message.find_by_conversation(conversation_id)
 
         messages: List[Dict[str, str]] = []
@@ -55,15 +67,8 @@ class Persona:
         return replying_message
 
     def remember_message(self, conversation_id: ObjectId, listener_id: ObjectId, message: str) -> None:
-        # self.db.messages.insert_one({
-        #     "conversationId": conversation_id,
-        #     "speakerId": self.id,
-        #     "listenerId": listener_id,
-        #     "message": message
-        # })
         new_message = Message(conversation_id, self.id, listener_id, message)
         new_message.save()
-
         return None
 
     def speak(self, conversation_id: ObjectId, listener_id: ObjectId, received_msg: str) -> str:

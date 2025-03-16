@@ -13,3 +13,28 @@ curl -X POST http://localhost:5001/chat -H "Content-Type: application/json" -d '
     "listener_id": "67d5bdccc9b5719b96222c8e",
     "message": "Let'\''s talk about music!"
 }'
+
+
+正常系
+curl -X POST http://localhost:5001/personas -H "Content-Type: application/json" -d '{
+    "name": "Cate",
+    "personality": "可愛らしい女性。天真爛漫。"
+}'
+
+異常系
+curl -X POST http://localhost:5001/personas -H "Content-Type: application/json" -d '{
+    "persona_id": "test_persona_1",
+    "name": "test_persona_1",
+    "description": "This is a test persona."
+}'
+
+curl -X GET http://localhost:5001/personas
+
+curl -X PUT http://localhost:5001/personas/67d6eafdff01c72bec3b76ba -H "Content-Type: application/json" -d '{
+    "name": "Cate_updated",
+    "personality": "可愛らしい女性。天真爛漫。"
+}'
+
+curl -X DELETE http://localhost:5001/personas/67d6f11b84760c08fc9089a3
+
+curl -X DELETE http://localhost:5001/personas/67d6f11b84760c08fc9089a2

@@ -1,4 +1,17 @@
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    env_file:
+      - ./config/.env.dev
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./frontend/src:/frontend/src
+    ports:
+      - "3000:3000"
+
   backend:
     build:
       context: .

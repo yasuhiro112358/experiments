@@ -2,6 +2,7 @@ from typing import Optional, Dict, List
 from bson.objectid import ObjectId
 from services.openai_service import OpenAIService
 from services.database_service import DatabaseService
+from models.message import Message
 
 class Persona:
     def __init__(self, name: str, personality: str, persona_id: Optional[ObjectId] = None) -> None:
@@ -28,7 +29,8 @@ class Persona:
             return None
 
     def generate_message(self, conversation_id: ObjectId, listener_id: ObjectId, received_message: str) -> str:
-        prev_messages = list(self.db.messages.find({"conversationId": conversation_id}))
+        # prev_messages = list(self.db.messages.find({"conversationId": conversation_id}))
+        prev_messages = Message.find_by_conversation(conversation_id)
 
         messages: List[Dict[str, str]] = []
         # システムメッセージを追加
@@ -53,12 +55,15 @@ class Persona:
         return replying_message
 
     def remember_message(self, conversation_id: ObjectId, listener_id: ObjectId, message: str) -> None:
-        self.db.messages.insert_one({
-            "conversationId": conversation_id,
-            "speakerId": self.id,
-            "listenerId": listener_id,
-            "message": message
-        })
+        # self.db.messages.insert_one({
+        #     "conversationId": conversation_id,
+        #     "speakerId": self.id,
+        #     "listenerId": listener_id,
+        #     "message": message
+        # })
+        new_message = Message(conversation_id, self.id, listener_id, message)
+        new_message.save()
+
         return None
 
     def speak(self, conversation_id: ObjectId, listener_id: ObjectId, received_msg: str) -> str:
